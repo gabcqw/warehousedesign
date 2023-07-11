@@ -25,7 +25,7 @@ def saving_balance(file_name, balance):
 def loading_history(file_name):#history is a list ?how to use it? loke -.readline() ? 
     try:
         with open(file_name, 'r') as file:
-            return literal_eval[file.read()]
+            return literal_eval(file.read())
     except FileNotFoundError:
         print("This file does not exist. Please create new file. ")
         return []
