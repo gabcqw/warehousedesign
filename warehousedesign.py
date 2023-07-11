@@ -1,5 +1,14 @@
 #set up default values in the warehouse system: Inventory and account
 #input account initial balance 10,000.
+import warehousefunctions
+file_name= input("Please enter a name for the file (i.e. .txt): ")
+
+inventory = warehousefunctions.loading_inventory(file_name)
+balance = warehousefunctions.loading_balance(file_name)
+history = warehousefunctions.loading_history(file_name)
+
+option = ""
+
 account = 10000
 #put product name, amount and unit price onto dictionary- Shampoo
 inventory_dict = {
@@ -38,10 +47,6 @@ while True:
         print(f"This deal brought you {sales} euros revenue.")
         change = (f"This deal brought you {sales} euros revenue.")
         history.append(change) 
-
-    elif command == "exit":
-        print("You will exit the system.")
-        break
 
     elif command == "purchase":
       key = input("Provide the name of product bought: ").lower()
@@ -108,7 +113,9 @@ while True:
                 print(i)
     
     elif command == "list":
-        print(inventory_dict)
+        print("Inventory status:\n")
+        for i in inventory_dict:
+            print(i)
 
 
     elif command == "warehouse":
@@ -117,7 +124,14 @@ while True:
         print(inventory_dict[key]['unit_price'])
         print(inventory_dict[key]['amount'])
 
+    elif command == "exit":
+        print("You will exit the system.")
+        warehousefunctions.saving_inventory(file_name, inventory)
+        warehousefunctions.saving_balance(file_name, balance)
+        warehousefunctions.saving_history(file_name, history)
+        break
+
 
     else:
-        print("It's invalid input! Please try again. ")
+        print("It's invalid input! Please try again or enter exit to leave. ")
 
