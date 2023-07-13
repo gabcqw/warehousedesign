@@ -1,11 +1,13 @@
 #set up default values in the warehouse system: Inventory and account
 #input account initial balance 10,000.
 import warehousefunctions
-file_name= input("Please enter a name for the file (i.e. .txt): ")
+file_name1= input("Please enter a name for inventory (i.e. .txt): ")
+file_name2= input("Please enter a name for balance (i.e. .txt): ")
+file_name3= input("Please enter a name for history (i.e. .txt): ")
 
-inventory = warehousefunctions.loading_inventory(file_name)
-balance = warehousefunctions.loading_balance(file_name)
-history = warehousefunctions.loading_history(file_name)
+inventory = warehousefunctions.loading_inventory(file_name1)
+balance = warehousefunctions.loading_balance(file_name2)
+history = warehousefunctions.loading_history(file_name3)
 
 option = ""
 
@@ -25,7 +27,7 @@ while True:
     print("exit -to log out\n")
     print("sale -record the sales of your products")
     print("purchase -record the purchase of your products")
-    print("list -to display inventory")
+    print("inventory -to display inventory")
     print("balance -the money in and out of your account")
     print("account- balance on the current account")
     print("history - the update record in the system\n")
@@ -44,8 +46,8 @@ while True:
         sales = unit_price * quantity
         inventory_dict[key]["amount"] -= quantity
         account = account + sales
-        print(f"This deal brought you {sales} euros revenue.")
-        change = (f"This deal brought you {sales} euros revenue.")
+        print(f"This deal- {key} brought you {sales} euros revenue.")
+        change = (f"This deal -{key} brought you {sales} euros revenue.")
         history.append(change) 
 
     elif command == "purchase":
@@ -53,8 +55,8 @@ while True:
       unit_price = float(input("Provide the unit price: "))
       quantity = int(input("Provide the quantity purchased: "))
       purchase = unit_price * quantity
-      print(f"This deal cost you {purchase} euros.")
-      change = (f"This deal cost you {purchase} euros.")
+      print(f"This deal - {key} cost you {purchase} euros.")
+      change = (f"This deal-{key} cost you {purchase} euros.")
       history.append(change)
 
       if purchase > account:
@@ -112,10 +114,9 @@ while True:
             for i in history[int(from_value)-1:int(to_value)]:
                 print(i)
     
-    elif command == "list":
+    elif command == "inventory":
         print("Inventory status:\n")
-        for i in inventory_dict:
-            print(i)
+        print(inventory_dict)
 
 
     elif command == "warehouse":
@@ -126,9 +127,9 @@ while True:
 
     elif command == "exit":
         print("You will exit the system.")
-        warehousefunctions.saving_inventory(file_name, inventory)
-        warehousefunctions.saving_balance(file_name, balance)
-        warehousefunctions.saving_history(file_name, history)
+        warehousefunctions.saving_inventory(file_name1, inventory)
+        warehousefunctions.saving_balance(file_name2, balance)
+        warehousefunctions.saving_history(file_name3, history)
         break
 
 
