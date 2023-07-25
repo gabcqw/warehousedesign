@@ -5,20 +5,11 @@ file_name1= input("Please enter a name for inventory (i.e. .txt): ")
 file_name2= input("Please enter a name for balance (i.e. .txt): ")
 file_name3= input("Please enter a name for history (i.e. .txt): ")
 
-inventory = warehousefunctions.loading_inventory(file_name1)
-balance = warehousefunctions.loading_balance(file_name2)
+inventory_dict = warehousefunctions.loading_inventory(file_name1)
+account = warehousefunctions.loading_balance(file_name2)
 history = warehousefunctions.loading_history(file_name3)
 
 option = ""
-
-account = 10000
-#put product name, amount and unit price onto dictionary- Shampoo
-inventory_dict = {
-    "shiseido": {"unit_price": 20, "amount": 18 },
-    "l'Oréal": {"unit_price":15, "amount": 22 },
-    "klorane": {"unit_price": 12, "amount": 30 },
-}
-history = []
 
 
 #Insert while loop to run commands
@@ -62,10 +53,11 @@ while True:
       if purchase > account:
           print("Current balance is not enough to purchase these products.")
           continue
-      inventory_dict[key] = {}
+      if key not in inventory_dict:
+          inventory_dict[key] = {"amount": 0, "unit_price":0}
       inventory_dict[key]['unit_price'] = unit_price
-      inventory_dict[key]['amount'] = quantity
-      print(key)
+      inventory_dict[key]['amount'] += quantity
+      print(key) 
       print(inventory_dict[key]['unit_price'])
       print(inventory_dict[key]['amount'])
       account = account - purchase
@@ -127,8 +119,8 @@ while True:
 
     elif command == "exit":
         print("You will exit the system.")
-        warehousefunctions.saving_inventory(file_name1, inventory)
-        warehousefunctions.saving_balance(file_name2, balance)
+        warehousefunctions.saving_inventory(file_name1, inventory_dict)
+        warehousefunctions.saving_balance(file_name2, account)
         warehousefunctions.saving_history(file_name3, history)
         break
 
