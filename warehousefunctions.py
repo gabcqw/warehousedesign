@@ -1,7 +1,9 @@
+from ast  import literal_eval
+
 def loading_inventory(file_name):
     try:
         with open(file_name, 'r') as file1:
-            return file1.read()
+            return literal_eval(file1.read())
     except FileNotFoundError:
         print("This file does not exist. Please create new file. ")
         return {}
@@ -13,7 +15,7 @@ def saving_inventory(file_name, inventory):
 def loading_balance(file_name): 
     try:
         with open(file_name, 'r') as file2:
-            return file2.read()
+            return literal_eval(file2.read())
 
     except FileNotFoundError:
         print("This file does not exist. Please create new file. ")
@@ -25,7 +27,7 @@ def saving_balance(file_name, balance):
 def loading_history(file_name):#history is a list ?how to use it? loke -.readline() ? 
     try:
         with open(file_name, 'r') as file3:
-            return [file3.read()]
+            return literal_eval(file3.read())
     except FileNotFoundError:
         print("This file does not exist. Please create new file. ")
         return []
